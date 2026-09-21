@@ -4,9 +4,11 @@ const std = @import("std");
 // Reviewers ignore this file’s specific contents beyond “it builds”.
 
 pub fn main() !void {
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("practice_zig scratch runner\n", .{});
-    try stdout.print("Import the package you are currently practicing and call its demos here.\n", .{});
+    // Note (Zig 0.16): `std.io.getStdOut()` is gone. The scratch runner uses
+    // `std.debug.print` for now; proper stdout handling via `std.Io.File.stdout()`
+    // + `File.writer()` is covered in Phase 1 exercises.
+    std.debug.print("practice_zig scratch runner\n", .{});
+    std.debug.print("Import the package you are currently practicing and call its demos here.\n", .{});
 }
 
 test "scratch smoke" {

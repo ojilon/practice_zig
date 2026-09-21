@@ -67,3 +67,34 @@ Hardening, documentation, extraction into clean repositories, and real personal 
 2. Prefer your own earlier packages when they fit; document deliberate use of std instead.
 3. Every non-trivial artifact has a clear build and test path.
 4. Paper and format work always ends with a runnable demonstration and short written takeaways.
+
+---
+
+## Module wiring convention (Zig ≥ 0.15)
+
+All phases use the same pattern so later tools can import earlier libraries:
+
+```zig
+const ds_mod = b.addModule("ds_ring", .{
+    .root_source_file = b.path("phase_02_ds_libs/01_ring_stack_queue/ring.zig"),
+    .target = target,
+    .optimize = optimize,
+});
+const tool_mod = b.createModule(.{
+    .root_source_file = b.path("phase_04_tools/01_cli/parse.zig"),
+    .target = target,
+    .optimize = optimize,
+});
+tool_mod.addImport("ds_ring", ds_mod);
+```
+
+- One module per library folder, named `pXX_shortname` (e.g. `p02_ring`, `p02_log`).
+- Never `@import` across phases with a relative path — always go through `build.zig`.
+- Each library folder owns a `BENCH.md` (one paragraph) once it is reused: what it costs, what changed.
+
+## Reuse checklist (check before calling a phase done)
+
+- [ ] Phase 2 containers used by at least one Phase 3 parser and one Phase 4 tool.
+- [ ] Phase 2 log + config used by every Phase 4+ executable.
+- [ ] Phase 3 parsers used by at least one Phase 4 tool and one Phase 5 TUI view.
+- [ ] At least one cross-compilation run (`-Dtarget=`) recorded per layer from Phase 4 on.

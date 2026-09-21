@@ -7,7 +7,7 @@
 Almost all non-trivial Zig code allocates. You need to be comfortable choosing an allocator, passing it, freeing correctly, and detecting leaks.
 
 ## Steps (simple → complex)
-1. Allocate and free with a `GeneralPurposeAllocator`; enable safety checks.
+1. Allocate and free with `std.heap.DebugAllocator` (named `GeneralPurposeAllocator` before Zig 0.16); enable safety checks.
 2. Use an arena for a group of short-lived allocations and free them together.
 3. Write a small struct that owns heap memory and has a clear `deinit`.
 4. Demonstrate a deliberate leak being caught by the GPA in a test or debug run, then fix it.

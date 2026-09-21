@@ -14,7 +14,7 @@ Almost every package should be reachable through a `build.zig`. Learn to add mod
 ### 1b. Memory is explicit
 - Prefer passing allocators explicitly.
 - Use arenas for clear lifetime scopes.
-- Use `GeneralPurposeAllocator` with leak detection in tests and debug runs.
+- Use `std.heap.DebugAllocator` (`GeneralPurposeAllocator` pre-0.16) with leak detection in tests and debug runs.
 - Document ownership for any non-trivial structure.
 
 ### 1c. Who writes what
@@ -93,6 +93,13 @@ zig build test -Dtest-filter="name"
 ```
 
 For a single-file experiment you can still use `zig run file.zig`, but prefer proper packages early.
+
+### 5a. Zig 0.16 survival notes (Sept 2026)
+
+- `ArrayList(T)` is unmanaged: `var l: std.ArrayList(T) = .empty; try l.append(gpa, x); defer l.deinit(gpa);`. If a blog shows `ArrayList.init(gpa)`, it is pre-0.15 — translate it.
+- `build.zig` uses `root_module`: `b.addExecutable(.{ .name = "...", .root_module = b.createModule(.{ .root_source_file = b.path("..."), .target = target, .optimize = optimize }) })`. Same for `b.addTest`.
+- `std.io.getStdOut()` / `std.fs` helpers from old tutorials are gone or moved. Use `std.debug.print` for scratch output and `std.Io.File.stdout()` + buffered `Writer` for real tools (see GROWTH_TRACKS.md T7).
+- When stuck on a std API, read the local source first: `zig env` gives you `std_dir`; `Select-String` over `array_list.zig`, `hash_map.zig`, `Build.zig` beats guessing.
 
 ---
 

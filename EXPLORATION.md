@@ -62,6 +62,31 @@ Keep a living notes file of patterns you adopt or reject, with origin and ration
 
 ---
 
+## 7. Concrete adventure backlog (ordered easy → hard)
+
+Pull from here when a phase says "pick a paper / spec". Each entry is scoped to 1–4 days.
+
+**Specs (with primary source to cite in your takeaway):**
+1. WAV/RIFF chunk walk — Microsoft/IBM WAVE spec excerpt; implement chunk listing + duration math.
+2. CSV with quoting (RFC 4180 spirit) — streaming row reader, fuzz with random quotes/commas.
+3. JSON subset — ECMA-404; strict number handling is the interesting part.
+4. XML 1.0 subset (W3C REC-xml) — entities + well-formedness errors with byte offsets.
+5. PDF objects/xref/trailer (ISO 32000 excerpt) — read-only: parse `obj…endobj`, `xref`, `trailer`.
+6. ISO BMFF box walk (ISO/IEC 14496-12 excerpt) — recursive box listing without full codec support.
+
+**Papers / classic ideas (implement the core, simulate the rest):**
+1. A ring-buffer / bounded-queue discipline note — implement SPSC ring, benchmark vs mutex queue.
+2. An allocator-strategy sketch (arena / slab / free-list) — implement one, measure fragmentation qualitatively.
+3. A string-matching core (e.g. KMP or Boyer-Moore-Horspool idea) — differential-test vs `std.mem.indexOf`.
+4. A sorting-experiment note — instrument comparison counts on your own data, compare to `std.sort`.
+5. A replication/log toy *simulator* with deterministic fault injection (not a networked system).
+6. A bytecode-VM idea note — constant pool + dispatch loop (runway into Phase 8).
+
+**Read-std quests (30–60 min each, see GROWTH_TRACKS.md T10):**
+`array_list.zig` → `hash_map.zig` → `heap/arena_allocator.zig` → `log.zig` → `json.zig` → `Build.zig`.
+
+---
+
 ## Rules
 
 - Prefer understanding + re-implementation over large copy-paste.

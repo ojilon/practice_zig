@@ -17,6 +17,19 @@ Heavy emphasis on **adventure reading + implementation** (papers, RFCs, format s
 
 Times assume ~1–2 focused hours most days. Adjust freely.
 
+> **Zig version note (0.16, Sept 2026):** three std/build changes affect every phase.
+> `ArrayList(T)` is now unmanaged — `var l: ArrayList(T) = .empty; try l.append(gpa, x); defer l.deinit(gpa);`
+> (`array_list.Managed` is deprecated). Executables/tests now take `root_module`
+> (`b.createModule(.{ .root_source_file = ..., .target, .optimize })`), not `root_source_file`
+> directly. The debug allocator is now `std.heap.DebugAllocator` (was `GeneralPurposeAllocator`);
+> `deinit()` returns `std.heap.Check.ok`/`.leak`. `std.io.getStdOut()` is gone — see `std.Io.File.stdout()` and `GROWTH_TRACKS.md` T7.
+> All new scaffolds assume this API.
+
+See also `GROWTH_TRACKS.md` — thirteen cross-cutting ladders (allocator lab, comptime dojo,
+error discipline, build dojo, fuzzing, benchmarking, IO, C interop, concurrency primer,
+read-std quests, katas, spec-parser ladder, paper ladder) that run orthogonal to the phases below.
+When the linear arc feels thin, pull one track item instead of stalling.
+
 ---
 
 ## High-level arc
@@ -63,6 +76,17 @@ Memory and the build system appear early — both are central to real Zig work.
 
 ## Phase 2 — Data Structures & Small Libraries (Weeks 6–9)
 
+Concrete folders (see `phase_02_ds_libs/`):
+
+| # | Folder | Focus |
+|---|--------|-------|
+| 01 | `01_ring_stack_queue` | stack, queue, ring buffer / deque with explicit allocators |
+| 02 | `02_linked_lists` | singly + doubly linked lists, ownership discipline |
+| 03 | `03_hashmap_set` | educational open-addressing map + set, differential-tested vs `std.HashMap` |
+| 04 | `04_str_intern_rope` | string interner + rope-ish builder |
+| 05 | `05_log_lib` | tiny leveled logger library |
+| 06 | `06_config_flags` | argv/env/file config helper |
+
 Build classic structures with explicit allocator parameters:
 
 - dynamic array helpers beyond ArrayList where useful
@@ -73,6 +97,8 @@ Build classic structures with explicit allocator parameters:
 - a config / flags helper
 
 Each library should be usable from other packages via the build system.
+Phase capstone: one CLI demo that imports at least two of your Phase 2 modules
+through `build.zig` (e.g. config + log + one container) — the first real BUILD_CHAIN link.
 
 ---
 

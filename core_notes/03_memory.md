@@ -2,8 +2,8 @@
 
 Zig has no garbage collector. You choose and pass allocators.
 
-## Key tools
-- `std.heap.GeneralPurposeAllocator` — general purpose; enable safety/leak detection in debug/tests
+## Key tools (Zig 0.16 names)
+- `std.heap.DebugAllocator` — the general-purpose debug allocator (renamed from `GeneralPurposeAllocator` pre-0.16); enable safety/leak detection in debug/tests. `deinit()` returns `std.heap.Check.ok` or `.leak`.
 - Arena allocators — bulk free at a clear lifetime boundary
 - Fixed buffer allocator — for bounded, stack-like or pre-reserved memory
 - `std.heap.page_allocator` — when you need pages directly

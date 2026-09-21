@@ -2,7 +2,7 @@
 
 ## Must implement / demonstrate
 
-1. Use `GeneralPurposeAllocator` to allocate and free a few values; show leak detection working.
+1. Use `std.heap.DebugAllocator` (`GeneralPurposeAllocator` pre-0.16) to allocate and free a few values; show leak detection working.
 2. Use an arena allocator for a set of temporary allocations and free them in one step.
 3. Define a small struct that owns a dynamically allocated buffer (or list) and implements `deinit`.
 4. Write at least one test that would fail on leak and passes when ownership is correct.

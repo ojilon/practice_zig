@@ -78,3 +78,18 @@ Tone: direct, practical, no solution code, explicit about allocators and the bui
 - Prefer primary sources.
 
 When you finish expanding a phase, update `ROADMAP.md` accordingly.
+
+---
+
+## Quality bar for new scaffolds (mandatory)
+
+Every exercise folder you create must have:
+
+1. `00_GUIDE.md` — why, steps (simple → complex), constraints, done-when, resources. Name the exact std files to read (e.g. `std/array_list.zig`, `std/hash_map.zig`) and the Zig-version API (`ArrayList = .empty` + per-op allocator; `root_module` in build.zig).
+2. `01_EXERCISES.md` — concrete tasks with **required symbol names** (so tests can target them), allocator expectations per function, and stretch goals marked `STRETCH`. No solution code — signatures and behaviours only.
+3. `02_QUESTIONS.md` — 4–7 reflection questions with `> Your answer:` boxes, including at least one ownership question, one failure-path question, and one reuse question ("which later phase will import this?").
+4. Folder registered in `ROADMAP.md` (table row) and `PROGRESS.md` (checkbox).
+5. Verified against the installed Zig (`zig version`): build API uses `root_module`, containers use the unmanaged idiom, no `std.io.getStdOut()`.
+
+Scope rule: a folder is 1–3 focused days. If your draft needs more, split it.
+Growth rule: each folder lists which `GROWTH_TRACKS.md` items it feeds (fuzz, bench, read-std) so the dojo compounds.
