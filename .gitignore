@@ -1,0 +1,28 @@
+# Zig build
+zig-cache/
+zig-out/
+*.o
+*.obj
+*.exe
+*.a
+*.so
+*.dylib
+*.dll
+
+# Local
+*.pdb
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets / local notes
+.env
+.env.*
+*.local.md
+secrets/
